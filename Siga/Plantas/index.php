@@ -1,5 +1,5 @@
 <?php
-require_once("../Classes/Usuario.class.php");
+require_once("../Classes/Planta.class.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     $id = isset($_POST['id'])?$_POST['id']:0;

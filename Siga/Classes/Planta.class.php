@@ -1,6 +1,6 @@
 <?php
 require_once ("Database.class.php");
-class Usuario{
+class Planta{
     private $id;
     private $nome;
     private $email;

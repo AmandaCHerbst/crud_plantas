@@ -8,7 +8,7 @@ peso decimal(16,2),
 anexo varchar(250) );
 
 
-create table usuario(
+create table planta(
 id int auto_increment primary key,
 nome varchar(250),
 email varchar(250),

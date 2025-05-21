@@ -7,8 +7,7 @@
 </head>
 <body>
     <ul>
-        <li><a href="Atividade/">Atividade</a></li>
-        <li><a href="Usuario/">Usuário</a></li>
+        <li><a href="Plantas/">Atividade</a></li>
     </ul>
 </body>
 </html>

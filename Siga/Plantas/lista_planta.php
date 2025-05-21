@@ -1,5 +1,5 @@
 <?php
-    require_once("../Classes/Usuario.class.php");
+    require_once("../Classes/Planta.class.php");
     $busca = isset($_GET['busca'])?$_GET['busca']:0;
     $tipo = isset($_GET['tipo'])?$_GET['tipo']:0;
    
@@ -15,7 +15,7 @@
         $item = str_replace('{contato}',$usuario->getContato(),$item);
         $itens .= $item;
     }
-    $listagem = file_get_contents('listagem_usuario.html');
+    $listagem = file_get_contents('listagem_planta.html');
     $listagem = str_replace('{itens}',$itens,$listagem);
     print($listagem);
      
