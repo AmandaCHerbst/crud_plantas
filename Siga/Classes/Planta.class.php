@@ -1,141 +1,111 @@
 <?php
-require_once ("Database.class.php");
-class Planta{
-    private $id;
-    private $nome;
-    private $email;
-    private $senha;
-    private $matricula;
-    private $contato;
+require_once("Database.class.php");
 
-    // construtor da classe
-    public function __construct($id,$nome,$email,$senha, $matricula, $contato){
+class Planta {
+    private $id, $nome, $tipo, $finalidade, $ambiente, $cuidados;
+
+    public function __construct($id, $nome, $tipo, $finalidade, $ambiente, $cuidados) {
         $this->setId($id);
         $this->setNome($nome);
-        $this->setEmail($email);
-        $this->setSenha($senha);
-        $this->setMatricula($matricula);
-        $this->setContato($contato);
+        $this->setTipo($tipo);
+        $this->setFinalidade($finalidade);
+        $this->setAmbiente($ambiente);
+        $this->setCuidados($cuidados);
     }
 
-    public function setId($id){
-        if ($id < 0)
-            throw new Exception('Erro. O ID deve ser maior ou igual a 0');
-        else
-            $this->id = $id;
+    public function setId($id) {
+        $this->id = $id >= 0 ? $id : 0;
     }
 
-    public function setNome($nome){
-        if ($nome == "")
-            throw new Exception('Erro. Informe um nome.');
-        else
-            $this->nome = $nome;
+    public function setNome($nome) {
+        $this->nome = $nome;
     }
 
-    public function setEmail($email){
-        $padrao = "/^[_a-z0-9-+]+(\.[_a-z0-9-+]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/i";
-        if (($email == "") && !preg_match($padrao,strtolower($email)))
-            throw new Exception('Erro. Informe um email.');
-        else
-            $this->email = $email;
+    public function setTipo($tipo) {
+        $this->tipo = $tipo;
     }
 
-
-    public function setSenha($senha){
-        if ($senha == "") // regras para senha
-            throw new Exception('Erro. Informe uma senha válida.');
-        else
-            $this->senha = $senha;
+    public function setFinalidade($finalidade) {
+        $this->finalidade = $finalidade;
     }
 
-    public function setMatricula($matricula){
-        if ($matricula == "") // regras para matricula
-            throw new Exception('Erro. Informe uma matricula válida.');
-        else
-            $this->matricula = $matricula;
+    public function setAmbiente($ambiente) {
+        $this->ambiente = $ambiente;
     }
 
-    public function setContato($contato){
-        if ($contato == "") // regras para contato
-            throw new Exception('Erro. Informe um contato válida.');
-        else
-            $this->contato = $contato;
+    public function setCuidados($cuidados) {
+        $this->cuidados = $cuidados;
     }
 
-    public function getId(){return $this->id;}
-    public function getNome(){return $this->nome;}
-    public function getEmail(){return $this->email;}
-    public function getSenha(){return $this->senha;}
-    public function getMatricula(){return $this->matricula;}
-    public function getContato(){return $this->contato;}
+    public function getId() { return $this->id; }
+    public function getNome() { return $this->nome; }
+    public function getTipo() { return $this->tipo; }
+    public function getFinalidade() { return $this->finalidade; }
+    public function getAmbiente() { return $this->ambiente; }
+    public function getCuidados() { return $this->cuidados; }
 
-    // método mágico para imprimir uma atividade
-    public function __toString():String{  
-        $str = "Usuario: $this->getId() - $this->getNome() - $this->getEmail()";        
-        return $str;
+    public function inserir(): bool {
+        $sql = "INSERT INTO planta (nome, tipo, finalidade, ambiente, cuidados)
+                VALUES (:nome, :tipo, :finalidade, :ambiente, :cuidados)";
+        $params = [
+            ':nome' => $this->getNome(),
+            ':tipo' => $this->getTipo(),
+            ':finalidade' => $this->getFinalidade(),
+            ':ambiente' => $this->getAmbiente(),
+            ':cuidados' => $this->getCuidados()
+        ];
+        return Database::executar($sql, $params);
     }
 
-    // insere uma atividade no banco 
-    public function inserir():Bool{
-        // montar o sql/ query
-        $sql = "INSERT INTO usuario 
-                    (nome, email, senha, matricula, contato)
-                    VALUES(:nome, :email, :senha, :matricula, :contato)";
-        
-        $parametros = array(':nome'=>$this->getNome(),
-                            ':email'=>$this->getEmail(),
-                            ':senha'=>$this->getSenha(),
-                            ':matricula'=>$this->getMatricula(),
-                            ':contato'=>$this->getContato());
-        
-        return Database::executar($sql, $parametros) == true;
+    public function alterar(): bool {
+        $sql = "UPDATE planta SET nome=:nome, tipo=:tipo, finalidade=:finalidade, ambiente=:ambiente, cuidados=:cuidados WHERE id=:id";
+        $params = [
+            ':id' => $this->getId(),
+            ':nome' => $this->getNome(),
+            ':tipo' => $this->getTipo(),
+            ':finalidade' => $this->getFinalidade(),
+            ':ambiente' => $this->getAmbiente(),
+            ':cuidados' => $this->getCuidados()
+        ];
+        return Database::executar($sql, $params);
     }
 
-    public static function listar($tipo=0, $info=''):Array{
-        $sql = "SELECT * FROM usuario";
-        switch ($tipo){
-            case 0: break;
-            case 1: $sql .= " WHERE id = :info ORDER BY id"; break; // filtro por ID
-            case 2: $sql .= " WHERE nome like :info ORDER BY nome"; $info = '%'.$info.'%'; break; // filtro por descrição
-            case 3: $sql .= " WHERE matricula = :info ORDER BY matricula"; break; // filtro por matricula
+    public function excluir(): bool {
+        $sql = "DELETE FROM planta WHERE id = :id";
+        $params = [':id' => $this->getId()];
+        return Database::executar($sql, $params);
+    }
+
+    public static function listar($tipo = 0, $info = ''): array {
+        $sql = "SELECT * FROM planta";
+        $params = [];
+
+        switch ($tipo) {
+            case 1:
+                $sql .= " WHERE id = :info ORDER BY id";
+                $params = [':info' => $info];
+                break;
+            case 2:
+                $sql .= " WHERE nome LIKE :info ORDER BY nome";
+                $params = [':info' => '%' . $info . '%'];
+                break;
         }
-        $parametros = array();
-        if ($tipo > 0)
-            $parametros = [':info'=>$info];
 
-        $comando = Database::executar($sql, $parametros);
-        $usuarios = [];
-        while ($registro = $comando->fetch()){
-            $usuario = new Usuario($registro['id'],$registro['nome'],$registro['email'],$registro['senha'],$registro['matricula'],$registro['contato']);
-            array_push($usuarios,$usuario);
+        $resultado = Database::executar($sql, $params);
+        $plantas = [];
+
+        while ($registro = $resultado->fetch()) {
+            $plantas[] = new Planta(
+                $registro['id'],
+                $registro['nome'],
+                $registro['tipo'],
+                $registro['finalidade'],
+                $registro['ambiente'],
+                $registro['cuidados']
+            );
         }
-        return $usuarios;
-    }
 
-    public function alterar():Bool{       
-       $sql = "UPDATE usuario
-                  SET nome = :nome, 
-                      email = :email,
-                      senha = :senha,
-                      matricula = :matricula,
-                      contato = :contato
-                WHERE id = :id";
-         $parametros = array(':id'=>$this->getId(),
-                        ':nome'=>$this->getNome(),
-                        ':email'=>$this->getEmail(),
-                        ':senha'=>$this->getSenha(),
-                        ':matricula'=>$this->getMatricula(),
-                        ':contato'=>$this->getContato());
-        return Database::executar($sql, $parametros) == true;
+        return $plantas;
     }
-
-    public function excluir():Bool{
-        $sql = "DELETE FROM usuario
-                      WHERE id = :id";
-        $parametros = array(':id'=>$this->getid());
-        return Database::executar($sql, $parametros) == true;
-     }
 }
-
-
 ?>

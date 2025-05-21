@@ -8,13 +8,15 @@ peso decimal(16,2),
 anexo varchar(250) );
 
 
-create table planta(
-id int auto_increment primary key,
-nome varchar(250),
-email varchar(250),
-senha varchar(250),
-matricula varchar(250),
-contato varchar(250) );
+CREATE TABLE planta (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(250),
+    tipo VARCHAR(100),
+    finalidade VARCHAR(100),
+    ambiente VARCHAR(100),
+    cuidados TEXT
+);
+
 
 
 select * from atividade;
