@@ -16,6 +16,17 @@ senha varchar(250),
 matricula varchar(250),
 contato varchar(250) );
 
+CREATE TABLE planta (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(250),
+    tipo VARCHAR(100),
+    finalidade VARCHAR(250),
+    ambiente VARCHAR(250),
+    cuidados TEXT,
+    anexo VARCHAR(250)
+);
+
+
 
 select * from atividade;
 -- script de criação do banco de dados

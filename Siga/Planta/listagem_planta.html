@@ -1,0 +1,28 @@
+<form action="lista_planta.php" method="GET">
+    <fieldset>
+        <legend>Busca</legend>
+        <label for="busca">Busca:</label>
+        <input type="text" name="busca">
+        <label for="tipo">Tipo:</label>
+        <select name="tipo">
+            <option value="0">Selecione</option>
+            <option value="1">ID</option>
+            <option value="2">Nome</option>
+        </select>
+        <button type="submit">Buscar</button>
+    </fieldset>
+</form>
+
+<h1>Listagem de Plantas</h1>
+<table border="1">
+    <tr>
+        <th>Id</th>
+        <th>Nome</th>
+        <th>Tipo</th>
+        <th>Finalidade</th>
+        <th>Ambiente Ideal</th>
+        <th>Cuidados</th>
+        <th>Anexo</th>
+    </tr>
+    {itens}
+</table>

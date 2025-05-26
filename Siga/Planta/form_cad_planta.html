@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Plantas</title>
+</head>
+<body>
+    <h1>Manutenção de Plantas</h1>
+    <form action="index.php" method="post" enctype="multipart/form-data">
+        <fieldset>
+            <legend>Formulário</legend>
+            <label for="id">Id:</label>
+            <input type="text" name="id" readonly value={id}>
+
+            <label for="nome">Nome:</label>
+            <input type="text" name="nome" value={nome}>
+
+            <label for="tipo">Tipo:</label>
+            <input type="text" name="tipo" value={tipo}>
+
+            <label for="finalidade">Finalidade:</label>
+            <input type="text" name="finalidade" value={finalidade}>
+
+            <label for="ambiente">Ambiente Ideal:</label>
+            <input type="text" name="ambiente" value={ambiente}>
+
+            <label for="cuidados">Cuidados:</label>
+            <input type="text" name="cuidados" value={cuidados}>
+
+            <label for="anexo">Imagem:</label>
+            <input type="file" name="anexo">
+
+            <button type="submit" name="acao" value="salvar">Salvar</button>
+            <button type="submit" name="acao" value="excluir">Excluir</button>
+            <input type="reset" value="Cancelar">
+        </fieldset>
+    </form>
+</body>
+</html>
