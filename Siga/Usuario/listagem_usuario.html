@@ -1,5 +1,5 @@
   <!-- Filtro -->
-  <form action="lista_planta.php" method="GET">
+  <form action="lista_usuario.php" method="GET">
     <fieldset>
         <legend>Busca</legend>
         <label for="busca">Busca</label>
@@ -9,7 +9,7 @@
             <option value="0">Selecione</option>
             <option value="1">ID</option>
             <option value="2">Nome</option>
-            <option value="3"></option>
+            <option value="3">Matricula</option>
         </select>
         <button type="submit">Buscar</button>
     </fieldset>
@@ -19,9 +19,9 @@
 <table border="1">
     <th>Id</th>
     <th>Nome</th>
-    <th>Tipo</th>
-    <th>Finalidade</th>
-    <th>Ambiente Ideal</th>
-    <th>Cuidados</th>
+    <th>E-mail</th>
+    <th>Senha</th>
+    <th>Matrícula</th>
+    <th>Contato</th>
     {itens}
 </table>
